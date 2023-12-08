@@ -18,7 +18,7 @@ class CustomCell : UITableViewCell{
         let label = UILabel()
         label.text = ""
 //                label.backgroundColor = UIColor.red
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 20)
         label.widthAnchor.constraint(equalToConstant: 65).isActive = true
         //        label.frame = CGRect(x: 0, y: 0, width: 65, height: 25)
         //        label.layer.addBorder([.right], color: UIColor.gray, width: 0.5)
@@ -29,7 +29,7 @@ class CustomCell : UITableViewCell{
         let textField = UITextField()
         textField.placeholder = ""
 //        textField.backgroundColor = UIColor.lightGray
-        textField.font = UIFont.systemFont(ofSize: 14)
+        textField.font = UIFont.systemFont(ofSize: 20)
         
         let placeholderPadding = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
         textField.leftView = placeholderPadding
@@ -82,22 +82,43 @@ extension CustomCell{
     }
     
     @objc func changeIsDoneValue(){
+        print(" 체크아이콘 눌렀어요 ! ")
+        
+        var todo =  contentsList[self.row]
+        var switchisDoneValue = todo.isDone.toggle()
+        print(todo)
+        print(switchisDoneValue)
+        
+    }
+    
+    @objc func changeIsDoneValue2(){
         //0.배열로 저장한 userDefaults 값의 일부를 직접 변경할 수 있는지 확인
         //contentsList 업데이트 후 userDefaults 동기화
          var todo =  contentsList[self.row]
         contentsList[self.row] = TodoData(contents: todo.contents, isDone: !todo.isDone)
         
-        let isDone = contentsList[self.row].isDone
+        var isDone = contentsList[self.row].isDone
+//      
+       var switchIsDone = isDone.toggle()
+        print("->",switchIsDone)
         
         checkIcon.image = isDone ? UIImage(systemName: "checkmark.circle.fill") : UIImage(systemName: "checkmark.circle")
         
+        
+        let todoView = TodoView()
+        let doneView = DoneView()
+        
+        
         TodoDataManager.shared.saveUserDefaluts()
+        TodoDataManager.shared.loadUserDefaluts()
+//        todoView.toDoTableView.reloadData()
+//        doneView.doneTableView.reloadData()
        
     
         
-        print(contentsList)
+//        print(contentsList)
     }
-    
+    //이건 왜 있는거지 ?
     func checkIconUI(with contentsList : TodoData){
         let isDone = contentsList.isDone
         checkIcon.image = isDone ? UIImage(systemName: "checkmark.circle.fill") : UIImage(systemName: "checkmark.circle")

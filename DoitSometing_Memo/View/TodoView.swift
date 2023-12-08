@@ -27,6 +27,7 @@ class TodoView : UIView, UITableViewDelegate, UITableViewDataSource {
     }()
     
     override init(frame: CGRect) {
+        
         super.init(frame: frame)
         setupUI()
     }
@@ -39,29 +40,51 @@ class TodoView : UIView, UITableViewDelegate, UITableViewDataSource {
 extension TodoView {
     //행의 개수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return contentsList.count
+        return contentsList.filter { $0.isDone == false}.count
     }
     
     //View에 표현할 내용을 구성
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! CustomCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath)   as! CustomCell
         
         cell.saveIndexRow(indexPath.row)
         
-        let contentsList = contentsList[indexPath.row]
+        let todoContents = contentsList.filter { $0.isDone == false }
+        let contentsList = todoContents[indexPath.row]
         cell.checkIconUI(with: contentsList)
         cell.userInput.text = contentsList.contents
-        
-        
-        
         return cell
     }
+    
+    //MARK: todoView에서는 삭제 기능 지우기
+//    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//        let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { [weak self] (_, _, completionHandler) in
+//            
+//            self?.removeItem(at: indexPath.row)
+//
+//            TodoDataManager.shared.saveUserDefaluts()
+//            TodoDataManager.shared.loadUserDefaluts()
+//            tableView.reloadData()
+//        }
+//        
+//        return UISwipeActionsConfiguration(actions: [deleteAction])
+//    }
     
     
 }
 //MARK: Method
 extension TodoView {
     
+    
+    func removeItem(at index: Int) {
+        guard index >= 0, index < contentsList.count else {
+            return // Index out of bounds
+        }
+        
+        contentsList.remove(at: index)
+        
+    }
+
     
     @objc func addCell (){
         //알럿채우기

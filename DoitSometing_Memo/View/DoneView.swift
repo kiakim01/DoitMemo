@@ -55,6 +55,27 @@ extension DoneView {
      return cell
     }
     
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { [weak self] (_, _, completionHandler) in
+            
+            self?.removeItem(at: indexPath.row)
+
+            TodoDataManager.shared.saveUserDefaluts()
+            TodoDataManager.shared.loadUserDefaluts()
+            tableView.reloadData()
+        }
+        
+        return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+    
+    func removeItem(at index: Int) {
+        guard index >= 0, index < contentsList.count else {
+            return // Index out of bounds
+        }
+        
+        contentsList.remove(at: index)
+        
+    }
     
 }
 

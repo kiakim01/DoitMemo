@@ -71,7 +71,6 @@
 				96A60CCA2AB85EBA00242180 /* Model */,
 				96A60CB62AB85E8200242180 /* AppDelegate.swift */,
 				96A60CB82AB85E8200242180 /* SceneDelegate.swift */,
-				96A60CBC2AB85E8200242180 /* Main.storyboard */,
 				96A60CBF2AB85E8300242180 /* Assets.xcassets */,
 				96A60CC12AB85E8300242180 /* LaunchScreen.storyboard */,
 				96A60CC42AB85E8300242180 /* Info.plist */,
@@ -98,6 +97,7 @@
 		96A60CDA2ABAA2D700242180 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				96A60CBC2AB85E8200242180 /* Main.storyboard */,
 				96A60CD02AB86A2000242180 /* TodoView.swift */,
 				96A60CD82AB8823100242180 /* CumstomCell.swift */,
 				96A60CD22AB86A2900242180 /* DoneView.swift */,

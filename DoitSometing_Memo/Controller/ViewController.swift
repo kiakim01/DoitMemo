@@ -30,9 +30,16 @@ class ViewController: UIViewController {
         return controler
     }()
 
+    let appTitle : UILabel = {
+        let label = UILabel()
+        label.text = "할일을 추가해보세요 ! "
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        return label
+    }()
     
     let todoView : TodoView = {
         let view = TodoView()
+        
         return view
     }()
     
@@ -63,6 +70,7 @@ extension ViewController {
 extension ViewController {
     func setupUI () {
         view.addSubview(segmentedControl)
+        view.addSubview(appTitle)
         view.addSubview(todoView)
         todoView.viewController = self
         //userDefaluts에 저장된 array가 호출될수 있도록 셋팅 필요
@@ -80,15 +88,21 @@ extension ViewController {
             make.height.equalTo(50)
         }
         
-        todoView.snp.makeConstraints { make in
+        appTitle.snp.makeConstraints { make in
             make.top.equalTo(segmentedControl.snp.bottom).offset(20)
+            make.left.equalTo(segmentedControl.snp.left)
+            
+        }
+        
+        todoView.snp.makeConstraints { make in
+            make.top.equalTo(appTitle.snp.bottom).offset(10)
             make.left.equalTo(view.snp.left).offset(20)
             make.right.equalTo(view.snp.right).offset(-20)
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
         }
         
         doneView.snp.makeConstraints { make in
-            make.top.equalTo(segmentedControl.snp.bottom).offset(20)
+            make.top.equalTo(appTitle.snp.bottom).offset(10)
             make.left.equalTo(view.snp.left).offset(20)
             make.right.equalTo(view.snp.right).offset(-20)
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
