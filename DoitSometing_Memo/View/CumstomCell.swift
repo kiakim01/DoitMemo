@@ -17,7 +17,7 @@ class CustomCell : UITableViewCell{
     let titleLabel: UILabel = {
         let label = UILabel()
         label.text = ""
-//                label.backgroundColor = UIColor.red
+        //                label.backgroundColor = UIColor.red
         label.font = UIFont.systemFont(ofSize: 20)
         label.widthAnchor.constraint(equalToConstant: 65).isActive = true
         //        label.frame = CGRect(x: 0, y: 0, width: 65, height: 25)
@@ -28,7 +28,7 @@ class CustomCell : UITableViewCell{
     let userInput: UITextField = {
         let textField = UITextField()
         textField.placeholder = ""
-//        textField.backgroundColor = UIColor.lightGray
+        //        textField.backgroundColor = UIColor.lightGray
         textField.font = UIFont.systemFont(ofSize: 20)
         
         let placeholderPadding = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
@@ -38,14 +38,14 @@ class CustomCell : UITableViewCell{
         return textField
     }()
     
-    let isDoneButton : UIButton = {
+    var isDoneButton : UIButton = {
         let button = UIButton()
         button.addTarget(self, action: #selector(changeIsDoneValue), for: .touchUpInside)
         return button
     }()
     
     
-    let checkIcon : UIImageView = {
+    var checkIcon : UIImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "checkmark.circle")
         return view
@@ -77,56 +77,31 @@ class CustomCell : UITableViewCell{
 
 
 extension CustomCell{
-    func saveIndexRow (_ row: Int){
-        self.row = row
-    }
+    
     
     @objc func changeIsDoneValue(){
-        print(" 체크아이콘 눌렀어요 ! ")
-        
-        var todo =  contentsList[self.row]
-        var switchisDoneValue = todo.isDone.toggle()
-        print(todo)
-        print(switchisDoneValue)
-        
-    }
-    
-    @objc func changeIsDoneValue2(){
-        //0.배열로 저장한 userDefaults 값의 일부를 직접 변경할 수 있는지 확인
-        //contentsList 업데이트 후 userDefaults 동기화
-         var todo =  contentsList[self.row]
-        contentsList[self.row] = TodoData(contents: todo.contents, isDone: !todo.isDone)
-        
-        var isDone = contentsList[self.row].isDone
-//      
-       var switchIsDone = isDone.toggle()
-        print("->",switchIsDone)
+       isDoneButton.isSelected.toggle()
+        let isDone = isDoneButton.isSelected
         
         checkIcon.image = isDone ? UIImage(systemName: "checkmark.circle.fill") : UIImage(systemName: "checkmark.circle")
+        //[1]index에 맞는 isDone Value를 바꾸는 동작 성공
+        print(userInput.text, isDone)
         
-        
-        let todoView = TodoView()
-        let doneView = DoneView()
-        
-        
+        //[2]userDefaults에 저장이 문제
         TodoDataManager.shared.saveUserDefaluts()
         TodoDataManager.shared.loadUserDefaluts()
-//        todoView.toDoTableView.reloadData()
-//        doneView.doneTableView.reloadData()
-       
-    
         
-//        print(contentsList)
+        print(contentsList)
     }
-    //이건 왜 있는거지 ?
+    
+    
+    //Use to DoneView
     func checkIconUI(with contentsList : TodoData){
-        let isDone = contentsList.isDone
-        checkIcon.image = isDone ? UIImage(systemName: "checkmark.circle.fill") : UIImage(systemName: "checkmark.circle")
-        print("IwonderValue", isDone)
-
+//        let isDone = contentsList.isDone
+//        checkIcon.image = isDone ? UIImage(systemName: "checkmark.circle.fill") : UIImage(systemName: "checkmark.circle")
+//        print("IwonderValue", isDone)
+        
     }
-    
-    
     
     
     func configureUI(){

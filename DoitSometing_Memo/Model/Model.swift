@@ -20,8 +20,8 @@ var contentsList: [TodoData] = [
     TodoData( contents: "UI Layout", isDone: true),
     TodoData( contents: "Custom Cell 만들기", isDone: true),
     TodoData( contents: "Luanch Screen & App Icon", isDone: true),
-    TodoData( contents: "DoneView filter 적용", isDone: true),
-    TodoData( contents: "userDefaults 적용", isDone: true),
+    TodoData( contents: "DoneView filter 적용", isDone: false),
+    TodoData( contents: "userDefaults 적용", isDone: false),
     TodoData( contents: "Core Data 적용", isDone: false)
 ]
 

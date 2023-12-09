@@ -13,6 +13,7 @@ class TodoView : UIView, UITableViewDelegate, UITableViewDataSource {
     // UIViewController에 대한 참조
     weak var viewController: UIViewController?
     
+    
     let addButton : UIButton = {
         let button = UIButton()
         button.setTitle("추가하기", for: .normal)
@@ -47,28 +48,28 @@ extension TodoView {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath)   as! CustomCell
         
-        cell.saveIndexRow(indexPath.row)
+    
         
         let todoContents = contentsList.filter { $0.isDone == false }
-        let contentsList = todoContents[indexPath.row]
-        cell.checkIconUI(with: contentsList)
-        cell.userInput.text = contentsList.contents
+        let indexTodoContents = todoContents[indexPath.row]
+        cell.isDoneButton.isSelected = indexTodoContents.isDone
+        cell.userInput.text = indexTodoContents.contents
         return cell
     }
     
     //MARK: todoView에서는 삭제 기능 지우기
-//    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//        let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { [weak self] (_, _, completionHandler) in
-//            
-//            self?.removeItem(at: indexPath.row)
-//
-//            TodoDataManager.shared.saveUserDefaluts()
-//            TodoDataManager.shared.loadUserDefaluts()
-//            tableView.reloadData()
-//        }
-//        
-//        return UISwipeActionsConfiguration(actions: [deleteAction])
-//    }
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { [weak self] (_, _, completionHandler) in
+            
+            self?.removeItem(at: indexPath.row)
+
+            TodoDataManager.shared.saveUserDefaluts()
+            TodoDataManager.shared.loadUserDefaluts()
+            tableView.reloadData()
+        }
+        
+        return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
     
     
 }
